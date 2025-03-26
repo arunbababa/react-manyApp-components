@@ -19,7 +19,7 @@ const useQuiz = (): useQuiz => {
     setUserChoice(CHOICE);
   };
 
-  const [result, setResult] = useState<string>();
+  const [result, setResult] = useState<string>('');
   const onSubmitAnsewr = () => {
     if (userChoice == CORRECT_ANSWER) {
       setResult(() => '正解です！');
