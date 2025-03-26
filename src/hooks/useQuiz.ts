@@ -8,7 +8,7 @@ type useQuiz = {
   QUESTION: string;
   CHOICE_LIST: string[];
   userChoice: string;
-  hadleUserChoice: () => void;
+  hadleUserChoice: (CHOICE: string) => void;
   onSubmitAnsewr: () => void;
   result: string;
 };
