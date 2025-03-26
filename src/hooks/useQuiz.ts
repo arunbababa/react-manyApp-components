@@ -6,7 +6,7 @@ const CORRECT_ANSWER = 'ライブラリ';
 
 type useQuiz = {
   QUESTION: string;
-  CHOICE_LIST: [];
+  CHOICE_LIST: string[];
   userChoice: string;
   hadleUserChoice: () => void;
   onSubmitAnsewr: () => void;
