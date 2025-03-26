@@ -1,13 +1,9 @@
 import { NextPage } from 'next';
-import { useEffect, useState } from 'react';
+
+import useProverb from '../../hooks/useProverb';
 
 const Page: NextPage = () => {
-  const PROVERB_LIST = ['あるんばばば', 'フレッド', 'るんばばば'];
-  const RAMDOM_INDEX = Math.floor(Math.random() * PROVERB_LIST.length);
-  const [A, setA] = useState<string>('');
-  useEffect(() => {
-    setA(PROVERB_LIST[RAMDOM_INDEX]);
-  }, []);
+  const { A } = useProverb();
 
   return (
     <>
