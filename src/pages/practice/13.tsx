@@ -1,34 +1,10 @@
 import { NextPage } from 'next';
-import { useEffect, useState } from 'react';
 
 import Button from '@/components/common/parts/Button';
+import { useStarAPI } from '@/hooks/useStarAPI';
 
-type Character = {
-  name: string;
-  height: string;
-  mass: string;
-  hair_color: string;
-  skin_color: string;
-  eye_color: string;
-  birth_day: string;
-  gender: string;
-};
-
-// これめちゃくちゃ練習し甲斐がある
 const Page: NextPage = () => {
-  const [ID, setID] = useState(1);
-  const [character, setcharacter] = useState<Character | null>(null);
-  useEffect(() => {
-    const fetchDate = async () => {
-      const res = await fetch(`https://swapi.dev/api/people/${ID}`);
-      console.log(res);
-      const date = (await res.json()) as Character;
-      setcharacter(date);
-    };
-
-    void fetchDate();
-  }, [ID]);
-
+  const { setID, character } = useStarAPI();
   return (
     <>
       <div className="mx-auto max-w-4xl">
