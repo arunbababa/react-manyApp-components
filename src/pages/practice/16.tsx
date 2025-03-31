@@ -11,22 +11,22 @@
 
 import { NextPage } from 'next';
 import { useState } from 'react';
-import { boolean } from 'zod';
+// import { boolean } from 'zod';
 
 import Button from '@/components/common/parts/Button';
 
 const Page: NextPage = () => {
   const [inputValue, setInputValue] = useState<string>('');
-  const [memos, setMemos] = useState<{ isdone: boolean; todo: string | null }>({
-    isdone: boolean,
-    todo: string | null,
-  });
+  const [memos, setMemos] = useState<string[]>([]);
+  //   isdone: boolean,
+  //   todo: string | null,
+  // });
 
   const handleMemos = () => {
     if (!inputValue) {
       alert('なんか入れようぜ');
     }
-    setMemos((prev) => [...prev, inputValue]);
+    // setMemos((prev) => [...prev, inputValue]);
     setInputValue('');
   };
 
