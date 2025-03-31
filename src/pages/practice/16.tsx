@@ -33,7 +33,7 @@ const Page: NextPage = () => {
 
   return (
     <>
-      <div className="boredr mx-auto mt-8 max-w-4xl">
+      <div className="mx-auto mt-8 max-w-4xl">
         <div className="flex justify-center">
           <div className="">
             {/* 入力フォーム */}
