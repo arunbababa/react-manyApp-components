@@ -11,13 +11,25 @@ import { NextPage } from 'next';
 import { useState } from 'react';
 
 import Button from '@/components/common/parts/Button';
-import useTodo from '@/hooks/useTodo';
 
 const Page: NextPage = () => {
-  const { inputValue, memos, deleteMemo, setInputValue, handleMemos } = useTodo();
+  const [inputValue, setInputValue] = useState<string>('');
+  const [memos, setMemos] = useState<string[]>([]);
+
+  const handleMemos = () => {
+    if (!inputValue) {
+      alert('なんか入れようぜ');
+    }
+    setMemos((prev) => [...prev, inputValue]);
+    setInputValue('');
+  };
+
+  const deleteMemo = (index: number) => {
+    setMemos((prev) => prev.filter((_, i) => i !== index));
+  };
 
   const [isDone, setIsDone] = useState('');
-  const doneMemo = (index) => {};
+  const doneMemo = (index: number) => {};
 
   return (
     <>
