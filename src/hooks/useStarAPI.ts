@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import { SetStateAction } from 'jotai';
+import { Dispatch, useEffect, useState } from 'react';
 
 type Character = {
   name: string;
@@ -12,11 +13,11 @@ type Character = {
 };
 
 type useStarAPI = () => {
-  setID: number;
+  setID: Dispatch<SetStateAction<number>>;
   character: Character | null;
 };
 
-export const useStarAPI = () => {
+export const useStarAPI: useStarAPI = () => {
   const [ID, setID] = useState(1);
   const [character, setcharacter] = useState<Character | null>(null);
   useEffect(() => {
@@ -27,7 +28,8 @@ export const useStarAPI = () => {
       setcharacter(date);
     };
 
-    void fetchDate();
+    // voidはなんなんだ？
+    fetchDate();
   }, [ID]);
 
   return {
