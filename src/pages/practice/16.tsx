@@ -1,41 +1,40 @@
-// メモアプリ 実装前の自分の整理
-// 機能要件
-// インプットがある
-// インプットに追加したものを追加ボタンで目も追加できる
-// メモ追加したものは削除ボタンで削除できる
-// メモ追加したものは完了ボタンを押すことでテキストに横文字が入る（tialwindかな）
-// インプットが空の際は簡単なバリデーションをする（追加できないようにする）←エラーが出るようにしたい
-// 一旦インデックスでやる自分で書いた後に動画見てインデックスじゃない固有なkeyをつけるにはどうすればいいかを知り修正する
-
-// んー詰まってわからんかった
-
 import { NextPage } from 'next';
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 // import { boolean } from 'zod';
 
 import Button from '@/components/common/parts/Button';
 
+type Task = {
+  label: string;
+  completed: boolean;
+};
+
 const Page: NextPage = () => {
-  const [inputValue, setInputValue] = useState<string>('');
-  const [memos, setMemos] = useState<string[]>([]);
-  //   isdone: boolean,
-  //   todo: string | null,
-  // });
+  const [taskLabel, setTaskLabel] = useState('');
+  const handleChangeTaskLabel = (e: ChangeEvent<HTMLInputElement>) => {
+    setTaskLabel(e.target.value);
+  };
+  const [taskList, setTaskList] = useState<Task[]>([]);
 
-  const handleMemos = () => {
-    if (!inputValue) {
-      alert('なんか入れようぜ');
+  const handleAddTask = () => {
+    if (!taskLabel) {
+      return; // 何もしない
     }
-    // setMemos((prev) => [...prev, inputValue]);
-    setInputValue('');
+    setTaskList((prev) => [...prev, { label: taskLabel, completed: false }]);
+    setTaskLabel('');
   };
 
-  const deleteMemo = (index: number) => {
-    setMemos((prev) => prev.filter((_, i) => i !== index));
+  const handleCompleteTask = (index: number) => {
+    setTaskList((prevTaskList) =>
+      prevTaskList.map((prevTask, i) =>
+        i === index ? { ...prevTask, completed: true } : prevTask,
+      ),
+    );
   };
 
-  const [isDone, setIsDone] = useState('');
-  const doneMemo = (index: number) => {};
+  const handleDeleteTask = (index: number) => {
+    setTaskList((prevTaskList) => prevTaskList.filter((_, i) => index !== i));
+  };
 
   return (
     <>
@@ -48,38 +47,33 @@ const Page: NextPage = () => {
                 className="mb-5 rounded-md border px-3 py-2 outline-none"
                 type="text"
                 placeholder="タスクを入力"
-                value={inputValue}
-                onChange={(e) => setInputValue(e.target.value)}
+                value={taskLabel}
+                onChange={handleChangeTaskLabel}
               />
 
               {/* 検索ボタン */}
-              <Button variant="primary" label="追加" className="mb-10" onClick={handleMemos} />
+              <Button variant="primary" label="追加" className="mb-10" onClick={handleAddTask} />
             </div>
 
-            {/* メモの情報 */}
-            {memos
-              ? memos.map((memo, index) => (
-                  <>
-                    <div
-                      className={
-                        isDone
-                          ? 'flex items-center justify-between border-b border-gray-200 py-2 line-through'
-                          : 'flex items-center justify-between border-b border-gray-200 py-2'
-                      }
-                    >
-                      <li key={index}>{memo}</li>
-                      <div className="flex gap-x-4">
-                        <Button
-                          label="削除"
-                          variant="error-secondary"
-                          onClick={() => deleteMemo(index)}
-                        />
-                        <Button label="完了" variant="secondary" onClick={() => doneMemo(index)} />
-                      </div>
-                    </div>
-                  </>
-                ))
-              : null}
+            {/* タスクの表示 */}
+            <ul className="mt-4 space-y-5">
+              {taskList.map((task, index) => (
+                <li
+                  key={index}
+                  className={`flex items-center justify-between border-b border-gray-200 ${task.completed ? 'line-through' : ''}`}
+                >
+                  {task.label}
+                  <div className="flex gap-x-2">
+                    <Button
+                      variant="secondary"
+                      label="完了"
+                      onClick={() => handleCompleteTask(index)}
+                    />
+                    <Button variant="error" label="削除" onClick={() => handleDeleteTask(index)} />
+                  </div>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       </div>
