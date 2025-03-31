@@ -7,14 +7,20 @@
 // インプットが空の際は簡単なバリデーションをする（追加できないようにする）←エラーが出るようにしたい
 // 一旦インデックスでやる自分で書いた後に動画見てインデックスじゃない固有なkeyをつけるにはどうすればいいかを知り修正する
 
+// んー詰まってわからんかった
+
 import { NextPage } from 'next';
 import { useState } from 'react';
+import { boolean } from 'zod';
 
 import Button from '@/components/common/parts/Button';
 
 const Page: NextPage = () => {
   const [inputValue, setInputValue] = useState<string>('');
-  const [memos, setMemos] = useState<string[]>([]);
+  const [memos, setMemos] = useState<{ isdone: boolean; todo: string | null }>({
+    isdone: boolean,
+    todo: string | null,
+  });
 
   const handleMemos = () => {
     if (!inputValue) {
